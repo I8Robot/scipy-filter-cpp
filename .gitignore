@@ -1,0 +1,19 @@
+# ignore folder
+.git
+build/
+build_x64/
+test_results/
+test_results_butter/
+test_results_filtfilt/
+
+
+
+# python
+*.pyc
+*.pyd
+__pycache__/
+*.egg-info
+*.whl
+*.npz
+
+
