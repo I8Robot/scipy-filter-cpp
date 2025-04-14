@@ -20,7 +20,7 @@ This project provides a C++ implementation of the SciPy digital filtering functi
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/scipy-filter-cpp.git
+git clone https://github.com/I8Robot/scipy-filter-cpp.git
 cd scipy-filter-cpp
 ```
 
@@ -277,7 +277,7 @@ The complete license details, including licenses for bundled third-party librari
 ### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/your-username/scipy-filter-cpp.git
+git clone https://github.com/I8Robot/scipy-filter-cpp.git
 cd scipy-filter-cpp
 ```
 
