@@ -11,7 +11,9 @@ set "CURRENT_DIR=%~dp0"
 set "BUILD_DIR=%CURRENT_DIR%build"
 set "TEST_DIR=%CURRENT_DIR%tests"
 set "RESULTS_DIR=%CURRENT_DIR%test_results_filtfilt"
-set "PYTHON_PATH=python"
+set "MINICONDA_PATH=D:\SoftWare\Miniconda3"
+set "ACTIVATE_CMD=%MINICONDA_PATH%\Scripts\activate.bat"
+set "ENV_NAME=scipy-filter-cpp"
 
 :: 创建输出结果目录
 echo [1/6] Creating results directory...
@@ -55,30 +57,38 @@ if %errorlevel% neq 0 (
 
 :: 运行Python比较脚本，将结果输出到指定目录
 echo [6/6] Running Python filtfilt comparison tests...
+echo Activating Miniconda environment '%ENV_NAME%'...
 cd "%RESULTS_DIR%"
+call "%ACTIVATE_CMD%" "%MINICONDA_PATH%"
+call conda activate %ENV_NAME%
 
-:: 复制Python测试脚本到结果目录
-copy "%TEST_DIR%\test_filtfilt_compare.py" "%RESULTS_DIR%\test_filtfilt_compare.py"
+:: 创建一个临时Python脚本来运行测试
+echo import sys, os >> temp_run_test.py
+echo sys.path.append(r"%TEST_DIR%") >> temp_run_test.py
+echo os.chdir(r"%RESULTS_DIR%") >> temp_run_test.py
+echo from test_filtfilt_compare import main >> temp_run_test.py
+echo main() >> temp_run_test.py
 
-:: 显示Python信息
-echo Python information:
-%PYTHON_PATH% --version
-echo.
-
-:: 运行Python测试脚本
-echo Running Python comparison script...
-%PYTHON_PATH% test_filtfilt_compare.py
+:: 运行临时Python脚本
+python temp_run_test.py
 if %errorlevel% neq 0 (
   echo WARNING: Python comparison test returned non-zero code: %errorlevel%
 )
 
-:: 生成可视化比较结果
-echo [7/7] Generating visualization...
+:: 清理临时文件
+del temp_run_test.py
+
+echo.
+echo --------------------------------------
+echo Running visualization...
+
+:: 对于可视化，我们需要复制可视化脚本到结果目录以避免导入问题
 copy "%TEST_DIR%\visualize_filtfilt_comparison.py" "%RESULTS_DIR%\visualize_filtfilt_comparison.py"
-%PYTHON_PATH% visualize_filtfilt_comparison.py .
-if %errorlevel% neq 0 (
-  echo WARNING: Visualization generation returned non-zero code: %errorlevel%
-)
+cd "%RESULTS_DIR%"
+:: 确保使用conda环境
+call "%ACTIVATE_CMD%" "%MINICONDA_PATH%"
+call conda activate %ENV_NAME%
+python visualize_filtfilt_comparison.py .
 
 echo.
 echo Tests completed!

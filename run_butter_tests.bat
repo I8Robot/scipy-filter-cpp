@@ -13,7 +13,7 @@ set "TEST_DIR=%CURRENT_DIR%tests"
 set "RESULTS_DIR=%CURRENT_DIR%test_results_butter"
 set "MINICONDA_PATH=D:\SoftWare\Miniconda3"
 set "ACTIVATE_CMD=%MINICONDA_PATH%\Scripts\activate.bat"
-set "ENV_NAME=soma"
+set "ENV_NAME=scipy-filter-cpp"
 
 :: 创建输出结果目录
 echo [1/6] Creating results directory...
