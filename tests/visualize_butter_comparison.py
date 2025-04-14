@@ -279,7 +279,7 @@ def main():
     ]
     
     # Create PDF output path
-    pdf_path = os.path.join(results_dir, 'filter_comparison.pdf')
+    pdf_path = os.path.join(results_dir, 'butter_comparison.pdf')
     
     # Create a PDF with all plots
     with PdfPages(pdf_path) as pdf:
