@@ -8,6 +8,8 @@
 
 This project provides a C++ implementation of the SciPy digital filtering functions, focusing on the Butterworth filter design and zero-phase filtering with `filtfilt`. It's designed to be compatible with SciPy's implementation while providing the performance benefits of C++.
 
+**Compatible with SciPy Version**: This implementation is based on SciPy 1.15.2 API and functionality.
+
 ## Dependencies
 
 - Eigen 3.4+ (obtained via Git during project setup)
@@ -280,6 +282,8 @@ The complete license details, including licenses for bundled third-party librari
 <h1 id="中文版本">SciPy数字滤波器C++实现</h1>
 
 本项目提供了SciPy数字滤波函数的C++实现，重点是巴特沃斯滤波器设计和使用`filtfilt`的零相位滤波。该实现与SciPy的API兼容，同时提供C++的性能优势。
+
+**兼容SciPy版本**: 本实现基于SciPy 1.15.2的API和功能。
 
 ## 依赖
 
