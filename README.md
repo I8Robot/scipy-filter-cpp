@@ -168,6 +168,39 @@ int main() {
 }
 ```
 
+### Built-in Filter Examples in main.cpp
+
+The project includes a comprehensive example application in `main.cpp` that demonstrates all four types of Butterworth filters (low-pass, high-pass, band-pass, and band-stop). Each filter type has its own example function:
+
+1. **`lowpass_filter_example`**: Demonstrates a low-pass filter with cutoff at 10 Hz
+   - Removes high-frequency components (>10 Hz) while preserving low frequencies
+   - Useful for removing high-frequency noise from signals
+
+2. **`highpass_filter_example`**: Demonstrates a high-pass filter with cutoff at 30 Hz
+   - Removes low-frequency components (<30 Hz) while preserving high frequencies
+   - Useful for removing baseline drift or low-frequency interference
+
+3. **`bandpass_filter_example`**: Demonstrates a band-pass filter with passband from 20 Hz to 55 Hz
+   - Preserves frequencies within the specified range while attenuating frequencies outside it
+   - Useful for isolating a specific frequency band of interest
+
+4. **`bandstop_filter_example`**: Demonstrates a band-stop filter with stopband from 30 Hz to 50 Hz
+   - Attenuates frequencies within the specified range while preserving frequencies outside it
+   - Useful for removing specific interference or noise within a known frequency range
+
+All examples use a test signal containing multiple frequency components (5 Hz, 40 Hz, and 80 Hz) plus noise. The filtering is performed using both the `filtfilt` function (zero-phase filtering) and standard `lfilter` for comparison. Results are saved to CSV files for visualization.
+
+The example also includes automatic validation and adjustment of cutoff frequencies to ensure they are within the valid range (0,1) when normalized by the Nyquist frequency (fs/2).
+
+To run the examples:
+
+```bash
+cd scipy-filter-cpp
+./build/src/SciPyFilter
+```
+
+The output will show the filter parameters used and the location of the CSV result files, which can be visualized using Python/Matplotlib or Excel.
+
 ## Testing
 
 The implementation includes comprehensive tests to verify compatibility with SciPy:
@@ -391,6 +424,39 @@ int main() {
     return 0;
 }
 ```
+
+### main.cpp中的内置滤波器示例
+
+本项目在`main.cpp`中包含了一个全面的示例应用程序，展示了四种巴特沃斯滤波器（低通、高通、带通和带阻）的使用。每种滤波器类型都有自己的示例函数：
+
+1. **`lowpass_filter_example`**：演示截止频率为10 Hz的低通滤波器
+   - 去除高频成分（>10 Hz），同时保留低频成分
+   - 适用于去除信号中的高频噪声
+
+2. **`highpass_filter_example`**：演示截止频率为30 Hz的高通滤波器
+   - 去除低频成分（<30 Hz），同时保留高频成分
+   - 适用于去除基线漂移或低频干扰
+
+3. **`bandpass_filter_example`**：演示通带为20 Hz到55 Hz的带通滤波器
+   - 保留指定范围内的频率，同时衰减范围外的频率
+   - 适用于分离特定感兴趣的频带
+
+4. **`bandstop_filter_example`**：演示阻带为30 Hz到50 Hz的带阻滤波器
+   - 衰减指定范围内的频率，同时保留范围外的频率
+   - 适用于去除已知频率范围内的特定干扰或噪声
+
+所有示例都使用包含多个频率成分（5 Hz、40 Hz和80 Hz）加上噪声的测试信号。滤波使用`filtfilt`函数（零相位滤波）和标准`lfilter`进行比较。结果保存为CSV文件以便可视化。
+
+该示例还包括截止频率的自动验证和调整，确保它们在归一化到奈奎斯特频率（fs/2）后位于有效范围(0,1)内。
+
+要运行示例：
+
+```bash
+cd scipy-filter-cpp
+./build/src/SciPyFilter
+```
+
+输出将显示所使用的滤波器参数和CSV结果文件的位置，这些文件可以使用Python/Matplotlib或Excel进行可视化。
 
 ## 测试
 

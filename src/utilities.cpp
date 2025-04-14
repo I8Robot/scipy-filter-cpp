@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <numeric>
 #include <cmath>
-#include <iostream>
 
 namespace filter {
 

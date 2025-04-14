@@ -13,16 +13,6 @@
 #include <utility>
 #include <iomanip>
 
-//void coutMatrix(IminusA)
-//{
-//    std::cout << "IminusA:" << std::endl;
-//    std::cout << "IminusA.shape:" << IminusA.rows() << "," << IminusA.cols() << std::endl;
-//    std::cout << IminusA(0, 0) << " " << IminusA(0, 1) << " " << IminusA(0, 2) << " " << IminusA(0, 3) << std::endl;
-//    std::cout << IminusA(1, 0) << " " << IminusA(1, 1) << " " << IminusA(1, 2) << " " << IminusA(1, 3) << std::endl;
-//    std::cout << IminusA(2, 0) << " " << IminusA(2, 1) << " " << IminusA(2, 2) << " " << IminusA(2, 3) << std::endl;
-//    std::cout << IminusA(3, 0) << " " << IminusA(3, 1) << " " << IminusA(3, 2) << " " << IminusA(3, 3) << std::endl;
-//}
-
 namespace signaltools {
 
 // Create a companion matrix as in SciPy's implementation
@@ -133,27 +123,13 @@ lfilterZi(const Eigen::Matrix<Scalar, Eigen::Dynamic, 1>& b,
     for (int i = 0; i < n - 1; ++i) {
         B(i) = b_padded(i + 1) - a_padded(i + 1) * b_padded(0);
     }
-    std::cout << std::fixed << std::setprecision(16) << std::scientific;
-    std::cout << "IminusA: " << std::endl;
-    for (int i = 0; i < IminusA.rows(); ++i) {
-        for (int j = 0; j < IminusA.cols(); ++j) {
-            std::cout << IminusA(i, j) << " ";
-        }
-        std::cout << std::endl;
-    }
-
-    std::cout << "B: " << std::endl;
-    for (int i = 0; i < B.size(); ++i) {
-        std::cout << B(i) << " ";
-    }
-    std::cout << std::endl;
+    
     
     // Solve for initial conditions
     Eigen::Matrix<Scalar, Eigen::Dynamic, 1> zi = IminusA.colPivHouseholderQr().solve(B);
 
     Eigen::VectorXd residual = IminusA * zi - B;
     double residual_norm = residual.norm();
-    std::cout << "C++ residual norm: " << residual_norm << std::endl;
     
     return zi;
 }
@@ -426,22 +402,9 @@ filtfilt(const Eigen::Matrix<Scalar, Eigen::Dynamic, 1>& b,
     
     // Get the steady state of the filter's step response
     auto zi = lfilterZi(b, a);
-    std::cout << std::fixed << std::setprecision(16) << std::scientific;
-    std::cout << "zi: " << std::endl;
-    for (int i = 0; i < zi.size(); ++i) {
-        std::cout << zi(i) << " ";
-    }
-    std::cout << std::endl;
 
     // Scale zi by first value of ext
     Eigen::Matrix<Scalar, Eigen::Dynamic, 1> zi_x = zi * ext(0);
-
-    //std::cout << std::fixed << std::setprecision(16);
-    std::cout << "zi_x: " << std::endl;
-    for (int i = 0; i < zi_x.size(); ++i) {
-        std::cout << zi_x(i) << " ";
-    }
-    std::cout << std::endl;
     
     // Forward filter
     std::optional<Eigen::Matrix<Scalar, Eigen::Dynamic, 1>> opt_zi_x = zi_x;
@@ -453,13 +416,6 @@ filtfilt(const Eigen::Matrix<Scalar, Eigen::Dynamic, 1>& b,
     // Backward filter
     // Create zi*y0 for initial conditions
     Eigen::Matrix<Scalar, Eigen::Dynamic, 1> zi_y = zi * y(y.size() - 1);
-
-    
-    std::cout << "zi_y: " << std::endl;
-    for (int i = 0; i < zi_y.size(); ++i) {
-        std::cout << zi_y(i) << " ";
-    }
-    std::cout << std::endl;
     
     // Reverse y and apply filter
     Eigen::Matrix<Scalar, Eigen::Dynamic, 1> y_reverse = y.reverse();

@@ -100,7 +100,6 @@ std::tuple<RealVector, RealVector> iirfilter(
     // Get analog prototype
     std::cout << "Generating analog prototype..." << std::endl;
     ZPK zpk = buttap(N);
-    print_zpk(zpk, "Analog prototype");
     
     // Pre-warp frequencies for digital filter design
     RealVector warped = wn;
@@ -116,10 +115,6 @@ std::tuple<RealVector, RealVector> iirfilter(
             w = 2 * fs2 * std::tan(pi * w / fs2);
         }
     }
-    std::cout << "warped: " << std::endl;
-    for(const auto& w : warped) {
-        std::cout << w << std::endl;
-    }
     
 
     // Transform to lowpass, highpass, bandpass, or bandstop
@@ -128,18 +123,14 @@ std::tuple<RealVector, RealVector> iirfilter(
             throw std::invalid_argument("Lowpass filter needs one cutoff frequency");
         }
         
-        print_zpk(zpk, "Before lowpass transform");
         zpk = lp2lp_zpk(zpk.z, zpk.p, zpk.k, warped[0]);
-        print_zpk(zpk, "After lowpass transform");
     }
     else if (filter_type == FilterType::HIGHPASS) {
         if (wn.size() != 1) {
             throw std::invalid_argument("Highpass filter needs one cutoff frequency");
         }
         
-        print_zpk(zpk, "Before highpas transform");
         zpk = lp2hp_zpk(zpk.z, zpk.p, zpk.k, warped[0]);
-        print_zpk(zpk, "After highpas transform");
     }
     else if (filter_type == FilterType::BANDPASS) {
         if (wn.size() != 2) {
@@ -149,11 +140,7 @@ std::tuple<RealVector, RealVector> iirfilter(
         double bw = warped[1] - warped[0];
         double wo = std::sqrt(warped[0] * warped[1]);
         
-        std::cout << "Bandpass transformation: wo=" << wo << ", bw=" << bw << std::endl;
-        print_zpk(zpk, "Before bandpass transform");
-        
         zpk = lp2bp_zpk(zpk.z, zpk.p, zpk.k, wo, bw);
-        print_zpk(zpk, "After bandpass transform");
     }
     else if (filter_type == FilterType::BANDSTOP) {
         if (wn.size() != 2) {
@@ -163,14 +150,11 @@ std::tuple<RealVector, RealVector> iirfilter(
         double bw = warped[1] - warped[0];
         double wo = std::sqrt(warped[0] * warped[1]);
         
-        print_zpk(zpk, "Before bandstop transform");
         zpk = lp2bs_zpk(zpk.z, zpk.p, zpk.k, wo, bw);
-        print_zpk(zpk, "After bandstop transform");
     }
     
     // Find discrete equivalent if necessary
     if (!analog) {
-        std::cout << "Finding discrete equivalent..." << std::endl;
         double fs2 = 2.0;  // Default sampling rate for normalized filters
         zpk = bilinear_zpk(zpk.z, zpk.p, zpk.k, fs2);
     }
@@ -249,10 +233,6 @@ std::tuple<ComplexVector, ComplexVector, double> iirfilter_zpk(
             double fs2 = 2.0;
             w = 2 * fs2 * std::tan(pi * w / fs2);
         }
-    }
-
-    for(const auto& w : warped) {
-        std::cout << "warped: " << w << std::endl;
     }
     
     // Transform to lowpass, highpass, bandpass, or bandstop
