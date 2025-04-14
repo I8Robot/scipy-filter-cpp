@@ -11,9 +11,9 @@ set "CURRENT_DIR=%~dp0"
 set "BUILD_DIR=%CURRENT_DIR%build"
 set "TEST_DIR=%CURRENT_DIR%tests"
 set "RESULTS_DIR=%CURRENT_DIR%test_results_butter"
-set "MINICONDA_PATH=D:\SoftWare\Miniconda3"
+set "MINICONDA_PATH=D:\SoftWare\Miniconda3" @REM 修改为你的Miniconda路径
 set "ACTIVATE_CMD=%MINICONDA_PATH%\Scripts\activate.bat"
-set "ENV_NAME=scipy-filter-cpp"
+set "ENV_NAME=scipy-filter-cpp" @REM 修改为你的环境名称
 
 :: 创建输出结果目录
 echo [1/6] Creating results directory...
