@@ -10,18 +10,41 @@ This project provides a C++ implementation of the SciPy digital filtering functi
 
 ## Dependencies
 
-- Eigen 3.4+ (included as a submodule in `3rdparty/Eigen`)
+- Eigen 3.4+ (obtained via Git during project setup)
 - C++17 compatible compiler
 - CMake 3.10+
+- Git (for obtaining Eigen library)
 
 ## Installation
 
+### 1. Clone the Repository
+
 ```bash
-git clone https://github.com/your-username/scipy-cpp-filters.git
-cd scipy-cpp-filters
+git clone https://github.com/your-username/scipy-filter-cpp.git
+cd scipy-filter-cpp
+```
+
+### 2. Get Eigen Library
+
+You can get the Eigen library in two ways:
+
+#### Option 1: Using Git Submodule (Recommended)
+
+```bash
+git submodule add https://gitlab.com/libeigen/eigen.git 3rdparty/Eigen
+git submodule update --init --recursive
+```
+
+#### Option 2: Manual Download
+
+Download Eigen from [https://eigen.tuxfamily.org](https://eigen.tuxfamily.org) and extract it to the `3rdparty/Eigen` directory.
+
+### 3. Build the Project
+
+```bash
 mkdir build && cd build
 cmake ..
-make
+cmake --build .
 ```
 
 ## Core Components
@@ -211,18 +234,41 @@ The complete license details, including licenses for bundled third-party librari
 
 ## 依赖
 
-- Eigen 3.4+（作为子模块包含在`3rdparty/Eigen`中）
+- Eigen 3.4+（通过Git在项目设置期间获取）
 - 支持C++17的编译器
 - CMake 3.10+
+- Git（用于获取Eigen库）
 
 ## 安装
 
+### 1. 克隆仓库
+
 ```bash
-git clone https://github.com/your-username/scipy-cpp-filters.git
-cd scipy-cpp-filters
+git clone https://github.com/your-username/scipy-filter-cpp.git
+cd scipy-filter-cpp
+```
+
+### 2. 获取Eigen库
+
+您可以通过两种方式获取Eigen库：
+
+#### 方式1：使用Git子模块（推荐）
+
+```bash
+git submodule add https://gitlab.com/libeigen/eigen.git 3rdparty/Eigen
+git submodule update --init --recursive
+```
+
+#### 方式2：手动下载
+
+从[https://eigen.tuxfamily.org](https://eigen.tuxfamily.org)下载Eigen并解压到`3rdparty/Eigen`目录。
+
+### 3. 构建项目
+
+```bash
 mkdir build && cd build
 cmake ..
-make
+cmake --build .
 ```
 
 ## 核心组件
